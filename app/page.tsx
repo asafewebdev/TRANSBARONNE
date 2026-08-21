@@ -37,7 +37,7 @@ import {
 } from "@/lib/constants";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 18 },
+  hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
 };
 
@@ -49,6 +49,8 @@ const stagger = {
     },
   },
 };
+
+const viewportReveal = { once: true, amount: 0.18 } as const;
 
 const trustIcons = [Route, ShieldCheck, MapPin, MessageCircle] as const;
 const cargoIcons = [Truck, Boxes, FlaskConical] as const;
@@ -115,7 +117,7 @@ function HeroSection() {
           <motion.p
             variants={fadeUp}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="mt-5 max-w-2xl text-base font-medium text-white/78 sm:text-lg"
+            className="mt-5 max-w-2xl text-base font-medium text-white/80 sm:text-lg"
           >
             Uma transportadora em Camaçari BA com atendimento direto, rotas nacionais e compromisso claro do primeiro contato até a entrega.
           </motion.p>
@@ -129,7 +131,7 @@ function HeroSection() {
             </WhatsAppButton>
             <a
               href="#como-funciona"
-              className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-white/28 px-5 py-3 text-base font-extrabold uppercase text-white transition hover:border-lime hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime"
+              className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-white/30 px-5 py-3 text-base font-extrabold uppercase text-white transition hover:border-lime hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime"
             >
               Ver como funciona
               <ArrowRight aria-hidden="true" className="h-5 w-5" />
@@ -143,7 +145,7 @@ function HeroSection() {
           className="flex lg:justify-end"
         >
           {/* TODO: Substituir por foto real do caminhão da frota Trans Baronne. */}
-          <span className="inline-flex border border-dashed border-lime/80 bg-ink/80 px-3 py-2 text-xs font-bold italic uppercase text-lime shadow-glow">
+          <span className="inline-flex rounded-full border border-dashed border-lime/80 bg-ink/80 px-3 py-2 text-xs font-bold italic uppercase text-lime shadow-glow">
             [ FOTO REAL DO CAMINHÃO ]
           </span>
         </motion.div>
@@ -152,7 +154,7 @@ function HeroSection() {
       <a
         href="#sobre"
         aria-label="Ir para a próxima seção"
-        className="absolute bottom-5 left-1/2 z-20 inline-flex h-11 w-11 -translate-x-1/2 items-center justify-center rounded-full border border-white/20 text-white/72 transition hover:border-lime hover:text-lime"
+        className="absolute bottom-5 left-1/2 z-20 inline-flex h-11 w-11 -translate-x-1/2 items-center justify-center rounded-full border border-white/20 text-white/70 transition hover:border-lime hover:text-lime"
       >
         <ArrowDown aria-hidden="true" className="h-5 w-5" />
       </a>
@@ -169,7 +171,7 @@ function CredibilityBar() {
           return (
             <motion.div
               key={point}
-              className="flex min-h-[58px] items-center gap-3 border border-border bg-ink/42 px-4 py-3"
+              className="flex min-h-[58px] items-center gap-3 rounded-2xl border border-border bg-ink/40 px-4 py-3"
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
@@ -190,22 +192,29 @@ function CredibilityBar() {
 function AboutSection() {
   return (
     <SectionShell id="sobre">
-      <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-        <div>
+      <motion.div
+        className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start"
+        variants={stagger}
+      >
+        <motion.div variants={fadeUp} transition={{ duration: 0.36, ease: "easeOut" }}>
           <SectionLabel>QUEM SOMOS</SectionLabel>
           <h2 className="mt-3 max-w-xl font-heading text-4xl font-black leading-none text-white sm:text-5xl md:text-6xl">
             Transporte com base firme e alcance nacional.
           </h2>
-        </div>
-        <div className="space-y-5 text-base text-muted sm:text-lg">
+        </motion.div>
+        <motion.div
+          className="space-y-5 text-base text-muted sm:text-lg"
+          variants={fadeUp}
+          transition={{ duration: 0.36, ease: "easeOut" }}
+        >
           <p>
             A Trans Baronne opera transporte de cargas a partir de Camaçari BA para empresas que precisam de clareza, velocidade de resposta e cuidado real na estrada.
           </p>
           <p>
             Cada frete é tratado como uma operação própria, com comunicação direta, planejamento de rota e atenção ao que protege a carga, o prazo e a confiança de quem contrata.
           </p>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </SectionShell>
   );
 }
@@ -213,26 +222,26 @@ function AboutSection() {
 function CargoTypesSection() {
   return (
     <SectionShell id="tipos-de-carga" className="bg-surface/60">
-      <div className="max-w-3xl">
+      <motion.div className="max-w-3xl" variants={fadeUp}>
         <SectionLabel>TIPOS DE CARGA</SectionLabel>
         <h2 className="mt-3 font-heading text-4xl font-black leading-none text-white sm:text-5xl md:text-6xl">
           Fretes pensados para a carga certa.
         </h2>
-      </div>
+      </motion.div>
 
-      <div className="mt-10 grid gap-4 md:grid-cols-3">
+      <motion.div className="mt-10 grid gap-4 md:grid-cols-3" variants={stagger}>
         {CARGO_TYPES.map((cargo, index) => {
           const Icon = cargoIcons[index];
           return (
             <motion.article
               key={cargo.title}
-              className="border border-border bg-surface p-6 shadow-[0_18px_60px_rgb(0_0_0_/_0.24)]"
+              className="rounded-2xl border border-border bg-surface p-6 shadow-[0_18px_60px_rgb(0_0_0_/_0.24)]"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.35 }}
               transition={{ duration: 0.32, delay: index * 0.06 }}
             >
-              <div className="flex h-12 w-12 items-center justify-center bg-lime text-ink shadow-glow">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-lime text-ink shadow-glow">
                 <Icon aria-hidden="true" className="h-6 w-6" />
               </div>
               <h3 className="mt-6 font-heading text-3xl font-black leading-none text-white">
@@ -242,9 +251,12 @@ function CargoTypesSection() {
             </motion.article>
           );
         })}
-      </div>
+      </motion.div>
 
-      <div className="mt-8 border-l-4 border-lime bg-ink p-5 sm:p-6">
+      <motion.div
+        className="mt-8 rounded-2xl border border-lime/25 border-l-4 border-l-lime bg-ink p-5 sm:p-6"
+        variants={fadeUp}
+      >
         <p className="text-base font-semibold text-white sm:text-lg">
           Não encontrou seu tipo de carga?{" "}
           <strong className="font-extrabold text-lime">
@@ -252,13 +264,13 @@ function CargoTypesSection() {
           </strong>{" "}
           Fale com a gente e monte sua cotação.
         </p>
-      </div>
+      </motion.div>
 
-      <div className="mt-7">
+      <motion.div className="mt-7" variants={fadeUp}>
         <WhatsAppButton href={whatsappUrl(WHATSAPP_MESSAGES.quote)}>
           Faça Sua Cotação!
         </WhatsAppButton>
-      </div>
+      </motion.div>
     </SectionShell>
   );
 }
@@ -266,8 +278,11 @@ function CargoTypesSection() {
 function GuaranteeSection() {
   return (
     <SectionShell id="garantia">
-      <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-        <div>
+      <motion.div
+        className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center"
+        variants={stagger}
+      >
+        <motion.div variants={fadeUp}>
           <SectionLabel>GARANTIA MINHA CARGA SEGURA</SectionLabel>
           <h2 className="mt-3 font-heading text-4xl font-black leading-none text-white sm:text-5xl md:text-6xl">
             Sua carga protegida do embarque até a entrega.
@@ -280,18 +295,18 @@ function GuaranteeSection() {
               Falar sobre a garantia
             </WhatsAppButton>
           </div>
-        </div>
+        </motion.div>
 
         <motion.article
-          className="relative overflow-hidden border border-lime/40 bg-surface p-6 shadow-glow-soft sm:p-8"
+          className="relative overflow-hidden rounded-2xl border border-lime/40 bg-surface p-6 shadow-glow-soft sm:p-8"
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: 0.35 }}
           transition={{ duration: 0.36, ease: "easeOut" }}
         >
-          <div className="absolute inset-x-0 top-0 h-1 bg-lime" />
+          <div className="absolute inset-x-0 top-0 h-1 rounded-t-2xl bg-lime" />
           <ShieldCheck aria-hidden="true" className="h-16 w-16 text-lime" />
-          <h3 className="mt-7 font-heading text-4xl font-black leading-none text-white">
+          <h3 className="mt-7 bg-transparent font-heading text-4xl font-black leading-none text-white [text-shadow:none]">
             Garantia para o caminho inteiro
           </h3>
           <p className="mt-5 text-base text-muted sm:text-lg">
@@ -301,14 +316,14 @@ function GuaranteeSection() {
             {["Origem", "Rota", "Destino"].map((item) => (
               <span
                 key={item}
-                className="inline-flex min-h-[36px] items-center border border-border bg-ink px-4 text-sm font-bold uppercase text-lime"
+                className="inline-flex min-h-[36px] items-center rounded-full border border-border bg-ink px-4 text-sm font-bold uppercase text-lime"
               >
                 {item}
               </span>
             ))}
           </div>
         </motion.article>
-      </div>
+      </motion.div>
     </SectionShell>
   );
 }
@@ -316,29 +331,29 @@ function GuaranteeSection() {
 function ProcessSection() {
   return (
     <SectionShell id="como-funciona" className="bg-surface/60">
-      <div className="max-w-3xl">
+      <motion.div className="max-w-3xl" variants={fadeUp}>
         <SectionLabel>COMO FUNCIONA</SectionLabel>
         <h2 className="mt-3 font-heading text-4xl font-black leading-none text-white sm:text-5xl md:text-6xl">
           Da cotação à entrega, sem ruído.
         </h2>
-      </div>
+      </motion.div>
 
-      <div className="relative mt-12">
+      <motion.div className="relative mt-12" variants={fadeUp}>
         <div className="absolute left-[12.5%] right-[12.5%] top-10 hidden h-px bg-border md:block" />
-        <div className="grid gap-5 md:grid-cols-4">
+        <motion.div className="grid gap-5 md:grid-cols-4" variants={stagger}>
           {PROCESS_STEPS.map((step, index) => {
             const Icon = processIcons[index];
             return (
               <motion.article
                 key={step.number}
-                className="relative border border-border bg-ink p-5"
+                className="relative rounded-2xl border border-border bg-ink p-5"
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.35 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
               >
                 <div className="flex items-center gap-4 md:block">
-                  <span className="relative z-10 inline-flex h-16 w-16 shrink-0 items-center justify-center border border-lime bg-surface font-heading text-3xl font-black text-lime shadow-glow">
+                  <span className="relative z-10 inline-flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-lime bg-surface font-heading text-3xl font-black text-lime shadow-glow">
                     {step.number}
                   </span>
                   <Icon
@@ -353,14 +368,14 @@ function ProcessSection() {
               </motion.article>
             );
           })}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
-      <div className="mt-8">
+      <motion.div className="mt-8" variants={fadeUp}>
         <WhatsAppButton href={whatsappUrl(WHATSAPP_MESSAGES.process)}>
           Faça Sua Cotação!
         </WhatsAppButton>
-      </div>
+      </motion.div>
     </SectionShell>
   );
 }
@@ -379,30 +394,38 @@ function NumbersSection() {
         sizes="100vw"
         className="z-0 object-cover"
       />
-      <div className="absolute inset-0 z-10 bg-ink/88" />
-      <div className="relative z-20 mx-auto max-w-content">
-        <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-start">
-          <div className="max-w-3xl">
+      <div className="absolute inset-0 z-10 bg-[linear-gradient(180deg,rgb(0_0_0_/_0.96),rgb(0_0_0_/_0.90)_50%,rgb(0_0_0_/_0.96))]" />
+      <div className="absolute inset-0 z-10 bg-ink/40" />
+      <motion.div
+        className="relative z-20 mx-auto max-w-content"
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportReveal}
+        variants={stagger}
+      >
+        <motion.div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-start" variants={stagger}>
+          <motion.div className="max-w-3xl" variants={fadeUp}>
             <SectionLabel>TRANS BARONNE EM NÚMEROS</SectionLabel>
             <h2 className="mt-3 font-heading text-4xl font-black leading-none text-white sm:text-5xl md:text-6xl">
               Prova de estrada, cliente e constância.
             </h2>
-          </div>
+          </motion.div>
           {/* TODO: Adicionar foto real de operação da Trans Baronne nesta seção. */}
-          <span className="w-fit border border-dashed border-lime/80 bg-ink/82 px-3 py-2 text-xs font-bold italic uppercase text-lime">
+          <motion.span
+            className="w-fit rounded-full border border-dashed border-lime/80 bg-ink/95 px-3 py-2 text-xs font-bold italic uppercase text-lime shadow-[0_0_24px_rgb(0_0_0_/_0.40)]"
+            variants={fadeUp}
+          >
             [ FOTO REAL A ADICIONAR ]
-          </span>
-        </div>
+          </motion.span>
+        </motion.div>
 
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <motion.div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4" variants={stagger}>
           {STATS.map((stat, index) => (
             <motion.article
               key={stat.label}
-              className="border border-white/12 bg-surface/82 p-5 backdrop-blur"
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.35 }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
+              className="rounded-2xl border border-white/10 bg-ink/95 p-5 shadow-[0_18px_60px_rgb(0_0_0_/_0.32)] backdrop-blur"
+              variants={fadeUp}
+              transition={{ duration: 0.32, delay: index * 0.03, ease: "easeOut" }}
             >
               <div className="font-heading text-5xl font-black leading-none text-lime">
                 {typeof stat.value === "number" ? (
@@ -420,8 +443,8 @@ function NumbersSection() {
               </p>
             </motion.article>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
@@ -429,7 +452,7 @@ function NumbersSection() {
 function FreightsSection() {
   return (
     <SectionShell id="fretes" className="overflow-hidden bg-ink">
-      <div className="max-w-3xl">
+      <motion.div className="max-w-3xl" variants={fadeUp}>
         <SectionLabel>FRETES CONCLUÍDOS</SectionLabel>
         <h2 className="mt-3 font-heading text-4xl font-black leading-none text-white sm:text-5xl md:text-6xl">
           Rotas reais para cargas que precisam chegar.
@@ -437,14 +460,14 @@ function FreightsSection() {
         <p className="mt-5 text-base text-muted sm:text-lg">
           A cada frete, a Trans Baronne transforma distância em operação combinada, registrada e concluída com atenção ao cliente.
         </p>
-      </div>
+      </motion.div>
 
-      <div className="relative mt-10 overflow-hidden">
+      <motion.div className="relative mt-10 overflow-hidden rounded-2xl" variants={fadeUp}>
         <div className="freight-track flex w-max gap-4 will-change-transform">
           {freightCards.map((freight, index) => (
             <article
               key={`${freight.route}-${index}`}
-              className="relative h-[310px] w-[78vw] max-w-[330px] shrink-0 overflow-hidden border border-border bg-surface sm:w-[330px]"
+              className="relative h-[310px] w-[78vw] max-w-[330px] shrink-0 overflow-hidden rounded-2xl border border-border bg-surface sm:w-[330px]"
             >
               <Image
                 src={freight.image}
@@ -458,15 +481,15 @@ function FreightsSection() {
               <div className="absolute left-4 top-4 rounded-full bg-lime px-3 py-1 text-xs font-black uppercase text-ink">
                 FRETE CONCLUÍDO
               </div>
-              <div className="absolute right-4 top-4 flex h-8 w-24 items-center justify-center bg-ink/82 px-2">
+              <div className="absolute right-4 top-4 flex h-8 w-24 items-center justify-center rounded-full bg-ink/90 px-2">
                 <Image
                   src={SITE.logo.wordmark}
                   alt="Logo Trans Baronne no frete concluído"
                   width={720}
-                  height={87}
+                  height={82}
                   loading="lazy"
                   sizes="96px"
-                  className="h-auto w-full"
+                  className="h-auto w-full object-contain"
                 />
               </div>
               <div className="absolute inset-x-0 bottom-0 p-5">
@@ -477,7 +500,7 @@ function FreightsSection() {
             </article>
           ))}
         </div>
-      </div>
+      </motion.div>
     </SectionShell>
   );
 }
@@ -487,21 +510,26 @@ function FAQSection() {
 
   return (
     <SectionShell id="faq" className="bg-surface/60">
-      <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr]">
-        <div>
+      <motion.div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr]" variants={stagger}>
+        <motion.div variants={fadeUp}>
           <SectionLabel>FAQ</SectionLabel>
           <h2 className="mt-3 font-heading text-4xl font-black leading-none text-white sm:text-5xl md:text-6xl">
             Tire suas dúvidas.
           </h2>
-        </div>
-        <div className="space-y-3">
+        </motion.div>
+        <motion.div className="space-y-3" variants={stagger}>
           {FAQ_ITEMS.map((item, index) => {
             const isOpen = openIndex === index;
             const answerId = `faq-answer-${index}`;
             const buttonId = `faq-button-${index}`;
 
             return (
-              <article key={item.question} className="border border-border bg-ink">
+              <motion.article
+                key={item.question}
+                className="overflow-hidden rounded-2xl border border-border bg-ink"
+                variants={fadeUp}
+                transition={{ duration: 0.3, delay: index * 0.03, ease: "easeOut" }}
+              >
                 <button
                   id={buttonId}
                   type="button"
@@ -513,7 +541,7 @@ function FAQSection() {
                   <span>{item.question}</span>
                   <ChevronDown
                     aria-hidden="true"
-                    className={`h-5 w-5 shrink-0 transition ${isOpen ? "rotate-180 text-lime" : "text-white/66"}`}
+                    className={`h-5 w-5 shrink-0 transition ${isOpen ? "rotate-180 text-lime" : "text-white/70"}`}
                   />
                 </button>
                 <AnimatePresence initial={false}>
@@ -534,11 +562,11 @@ function FAQSection() {
                     </motion.div>
                   ) : null}
                 </AnimatePresence>
-              </article>
+              </motion.article>
             );
           })}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </SectionShell>
   );
 }
@@ -549,17 +577,23 @@ function FinalCTASection() {
       id="contato"
       className="bg-[linear-gradient(135deg,#063016,#15803d_52%,#0a0a0a)] px-5 py-16 sm:px-6 md:py-24 lg:px-10"
     >
-      <div className="mx-auto max-w-content">
-        <div className="max-w-3xl">
+      <motion.div
+        className="mx-auto max-w-content"
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportReveal}
+        variants={stagger}
+      >
+        <motion.div className="max-w-3xl" variants={fadeUp}>
           <SectionLabel className="text-white">CONTATO</SectionLabel>
           <h2 className="mt-3 font-heading text-4xl font-black leading-none text-white sm:text-5xl md:text-6xl">
             Mova sua carga com a Trans Baronne agora.
           </h2>
-          <p className="mt-5 text-base font-medium text-white/82 sm:text-lg">
+          <p className="mt-5 text-base font-medium text-white/80 sm:text-lg">
             Envie os dados do frete e receba uma cotação direta para sua próxima rota nacional.
           </p>
-        </div>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+        </motion.div>
+        <motion.div className="mt-8 flex flex-col gap-3 sm:flex-row" variants={fadeUp}>
           <WhatsAppButton
             href={whatsappUrl(WHATSAPP_MESSAGES.final)}
             className="bg-white text-ink hover:bg-lime"
@@ -568,15 +602,15 @@ function FinalCTASection() {
           </WhatsAppButton>
           <a
             href={SITE.instagramUrl}
-            className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-white/45 px-5 py-3 text-base font-extrabold uppercase text-white transition hover:border-lime hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+            className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-white/50 px-5 py-3 text-base font-extrabold uppercase text-white transition hover:border-lime hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
             rel="noopener noreferrer"
             target="_blank"
           >
             <Instagram aria-hidden="true" className="h-5 w-5" />
             Instagram
           </a>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
@@ -585,9 +619,15 @@ function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border bg-ink px-5 py-12 sm:px-6 lg:px-10">
-      <div className="mx-auto grid max-w-content gap-10 md:grid-cols-[1.2fr_0.8fr_1fr_1.1fr]">
-        <section>
+    <motion.footer
+      className="border-t border-border bg-ink px-5 py-12 sm:px-6 lg:px-10"
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportReveal}
+      variants={stagger}
+    >
+      <motion.div className="mx-auto grid max-w-content gap-10 md:grid-cols-[1.2fr_0.8fr_1fr_1.1fr]" variants={stagger}>
+        <motion.section variants={fadeUp}>
           <Image
             src={SITE.logo.full}
             alt={SITE.logo.alt}
@@ -600,7 +640,7 @@ function Footer() {
           <p className="mt-3 max-w-xs text-base text-muted">
             Transporte nacional de cargas com base em Camaçari BA e atendimento direto para empresas.
           </p>
-        </section>
+        </motion.section>
 
         <FooterColumn title="Serviços">
           <FooterText>Lotação</FooterText>
@@ -641,29 +681,42 @@ function Footer() {
             </a>
           </address>
         </FooterColumn>
-      </div>
-      <div className="mx-auto mt-10 max-w-content border-t border-border pt-6 text-sm text-muted">
+      </motion.div>
+      <motion.div className="mx-auto mt-10 max-w-content border-t border-border pt-6 text-sm text-muted" variants={fadeUp}>
         © {year} {SITE.legalName}. Todos os direitos reservados.
-      </div>
-    </footer>
+      </motion.div>
+    </motion.footer>
   );
 }
 
 function FloatingWhatsAppButton() {
-  const [contactVisible, setContactVisible] = useState(false);
+  const [shouldHide, setShouldHide] = useState(false);
 
   useEffect(() => {
-    const contactSection = document.getElementById("contato");
-    if (!contactSection) {
+    const watchedElements = Array.from(
+      document.querySelectorAll("[data-contextual-whatsapp='true'], #contato, footer"),
+    );
+
+    if (watchedElements.length === 0) {
       return;
     }
 
+    const visibleElements = new Set<Element>();
     const observer = new IntersectionObserver(
-      ([entry]) => setContactVisible(entry.isIntersecting),
-      { rootMargin: "0px 0px -35% 0px", threshold: 0.12 },
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            visibleElements.add(entry.target);
+          } else {
+            visibleElements.delete(entry.target);
+          }
+        });
+        setShouldHide(visibleElements.size > 0);
+      },
+      { rootMargin: "0px 0px -18% 0px", threshold: 0.18 },
     );
 
-    observer.observe(contactSection);
+    watchedElements.forEach((element) => observer.observe(element));
     return () => observer.disconnect();
   }, []);
 
@@ -671,7 +724,7 @@ function FloatingWhatsAppButton() {
     <a
       href={whatsappUrl(WHATSAPP_MESSAGES.floating)}
       aria-label="Faça sua cotação pelo WhatsApp"
-      className={`fixed bottom-5 right-5 z-[70] inline-flex min-h-[52px] min-w-[52px] items-center justify-center gap-2 rounded-full bg-primary px-4 text-ink shadow-glow transition hover:bg-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime sm:px-5 ${contactVisible ? "max-sm:pointer-events-none max-sm:translate-y-12 max-sm:opacity-0" : ""}`}
+      className={`fixed bottom-5 right-4 z-[70] inline-flex min-h-[52px] min-w-[52px] items-center justify-center gap-2 rounded-full bg-primary px-4 text-ink shadow-glow transition duration-300 hover:bg-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime sm:bottom-6 sm:right-6 sm:px-5 ${shouldHide ? "pointer-events-none translate-y-8 opacity-0" : "translate-y-0 opacity-100"}`}
       rel="noopener noreferrer"
       target="_blank"
     >
@@ -696,10 +749,10 @@ function SectionShell({
     <motion.section
       id={id}
       className={`px-5 py-14 sm:px-6 md:py-24 lg:px-10 ${className}`}
-      initial={{ opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.16 }}
-      transition={{ duration: 0.38, ease: "easeOut" }}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportReveal}
+      variants={stagger}
     >
       <div className="mx-auto max-w-content">{children}</div>
     </motion.section>
@@ -714,9 +767,13 @@ function SectionLabel({
   className?: string;
 }) {
   return (
-    <p className={`text-sm font-extrabold uppercase text-accent ${className}`}>
+    <motion.p
+      className={`text-sm font-extrabold uppercase text-accent ${className}`}
+      variants={fadeUp}
+      transition={{ duration: 0.34, ease: "easeOut" }}
+    >
       {children}
-    </p>
+    </motion.p>
   );
 }
 
@@ -732,6 +789,7 @@ function WhatsAppButton({
   return (
     <a
       href={href}
+      data-contextual-whatsapp="true"
       className={`inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-base font-extrabold uppercase text-ink shadow-glow transition hover:bg-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime ${className}`}
       rel="noopener noreferrer"
       target="_blank"

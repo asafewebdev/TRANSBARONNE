@@ -27,7 +27,7 @@ export function Navbar() {
 
   const headerClass =
     isScrolled || isOpen
-      ? "border-white/10 bg-ink/92 shadow-[0_16px_50px_rgb(0_0_0_/_0.34)] backdrop-blur-xl"
+      ? "border-white/10 bg-ink/95 shadow-[0_16px_50px_rgb(0_0_0_/_0.34)] backdrop-blur-xl"
       : "border-transparent bg-transparent";
 
   return (
@@ -37,7 +37,7 @@ export function Navbar() {
       <div className="mx-auto flex min-h-[72px] max-w-content items-center justify-between px-5 sm:px-6 lg:px-10">
         <a
           href="#inicio"
-          className="group relative inline-flex min-h-[44px] w-[168px] items-center sm:w-[192px]"
+          className="group relative inline-flex min-h-[44px] w-[214px] items-center overflow-visible sm:w-[246px]"
           aria-label={`${SITE.name} página inicial`}
           onClick={() => setIsOpen(false)}
         >
@@ -45,9 +45,9 @@ export function Navbar() {
             src={SITE.logo.wordmark}
             alt={SITE.logo.alt}
             width={720}
-            height={87}
-            sizes="(min-width: 640px) 192px, 168px"
-            className="h-auto w-full transition duration-200 group-hover:drop-shadow-[0_0_12px_rgb(126_211_33_/_0.50)]"
+            height={82}
+            sizes="(min-width: 640px) 246px, 214px"
+            className="block h-auto w-full max-w-full object-contain transition duration-200 group-hover:drop-shadow-[0_0_12px_rgb(126_211_33_/_0.50)]"
           />
         </a>
 
@@ -57,7 +57,7 @@ export function Navbar() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="inline-flex min-h-[44px] items-center text-sm font-bold uppercase text-white/78 transition hover:text-lime"
+                  className="inline-flex min-h-[44px] items-center text-sm font-bold uppercase text-white/80 transition hover:text-lime"
                 >
                   {link.label}
                 </a>
@@ -80,7 +80,7 @@ export function Navbar() {
           aria-controls="mobile-navigation"
           aria-expanded={isOpen}
           aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
-          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/18 text-white transition hover:border-lime hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime lg:hidden"
+          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/20 text-white transition hover:border-lime hover:text-lime focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime lg:hidden"
           type="button"
           onClick={() => setIsOpen((current) => !current)}
         >
